@@ -20,16 +20,22 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
         header {
             background-color: #007bff;
             color: white;
             padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
         header h1 {
             font-size: 1.8rem;
+            animation: slideInDown 1s ease forwards;
         }
 
         nav {
@@ -65,6 +71,9 @@
             background-color: white;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
             border-radius: 8px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s ease forwards 0.5s;
         }
 
         main h2 {
@@ -76,6 +85,16 @@
         main p {
             margin-bottom: 1rem;
             font-size: 1rem;
+        }
+
+        .hero-image {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            animation: zoomIn 1s ease forwards;
         }
 
         footer {
@@ -101,6 +120,40 @@
                 margin: 1rem;
             }
         }
+
+        /* Animations */
+        @keyframes slideInDown {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes zoomIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
     </style>
 </head>
 <body>
@@ -116,12 +169,28 @@
         </nav>
     </header>
     <main>
+        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80" alt="Imagen Hero" class="hero-image" />
         <h2>Bienvenido a mi sitio web</h2>
         <p>Este es un diseño moderno y responsive que se adapta a cualquier tamaño de pantalla.</p>
-        <p>Utiliza HTML5 y CSS3 para ofrecer una experiencia de usuario óptima en dispositivos móviles y de escritorio.</p>
+        <p>Utiliza HTML5, CSS3 y animaciones JavaScript para ofrecer una experiencia de usuario óptima en dispositivos móviles y de escritorio.</p>
     </main>
     <footer>
         &copy; 2024 Mi Web Moderna. Todos los derechos reservados.
     </footer>
+    <script>
+        // Simple fade-in animation on scroll for main content paragraphs
+        document.addEventListener('DOMContentLoaded', () => {
+            const paragraphs = document.querySelectorAll('main p');
+            paragraphs.forEach((p, index) => {
+                p.style.opacity = 0;
+                p.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    p.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                    p.style.opacity = 1;
+                    p.style.transform = 'translateY(0)';
+                }, 700 + index * 300);
+            });
+        });
+    </script>
 </body>
 </html>
